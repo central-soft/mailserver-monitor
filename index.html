@@ -29,7 +29,7 @@ window.addEventListener('load', function() {
     let categories = [], data = [];
     csvData.forEach((row) => {
       categories.push(row.date);
-      data.push(parseInt(row.space, 10));
+      data.push(parseInt(row.space, 10) / 1024); // MB→GB
     });
 
     Highcharts.chart('container', {
