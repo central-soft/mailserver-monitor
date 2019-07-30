@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>server-monitor</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="">
+<!--[if lt IE 9]>
+<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="shortcut icon" href="">
+</head>
+<body>
+<!-- content -->
+<div id="container"><div>
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/7.1.2/highcharts.js"></script>
+<script type="text/javascript">
+window.addEventListener('load', function() {
+  $.ajax({
+    url: '/data',
+    type: 'GET'
+  }).done( (csvData) => {
+    let categories = [], data = [];
+    csvData.forEach((row) => {
+      categories.push(row.date);
+      data.push(parseInt(row.space, 10));
+    });
+
+    Highcharts.chart('container', {
+      title: {text: 'サーバの残容量推移'},
+      xAxis: {categories},
+      yAxis: {title: {text: '残容量（MB）'}},
+      series: [{
+        name: 'メールサーバ',
+        data: data
+      }]
+    });
+  });
+});
+</script>
+</body>
+</html>
